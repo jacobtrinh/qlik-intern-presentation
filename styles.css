@@ -791,11 +791,28 @@ body {
     color: #008936;
     text-decoration: none;
     font-weight: 600;
+    position: relative;
+    padding: 5px 0;
     transition: color 0.3s ease;
+}
+
+.project-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #008936, #00c55e);
+    transition: width 0.3s ease;
 }
 
 .project-link:hover {
     color: rgb(0, 100, 40);
+}
+
+.project-link:hover::after {
+    width: 100%;
 }
 
 /* Contact Section */
