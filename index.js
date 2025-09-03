@@ -1,39 +1,45 @@
 // Dark mode toggle functionality
-const logo = document.querySelector('.nav-logo');
+const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
-            
-// Check for saved theme preference or default to light mode
-const currentTheme = localStorage.getItem('theme') || 'light';
+
+// Check for saved theme preference or default to dark mode
+const currentTheme = localStorage.getItem('theme') || 'dark';
 body.classList.add(currentTheme + '-mode');
-            
+
+// Update button state based on current theme
+if (currentTheme === 'dark') {
+    themeToggle.classList.add('dark');
+}
+
 // Typewriter effect
 const phrases = [
     'Web Developer',
     'Creative Thinker',
-    'Student',
-    'UI/UX Designer',
-    'Programmer'  ];
+    'Problem Solver',
+    'UI/UX Enthusiast',
+    'Code Craftsman'
+];
 let phraseIndex = 0;
 let letterIndex = 0;
- let currentPhrase = '';
-  let isDeleting = false;
-   let typewriter = document.querySelector('.typewriter');
-            
+let currentPhrase = '';
+let isDeleting = false;
+let typewriter = document.querySelector('.typewriter');
+
 function type() {
     const currentFullPhrase = phrases[phraseIndex];
-                
+    
     if (isDeleting) {
         currentPhrase = currentFullPhrase.substring(0, letterIndex - 1);
         letterIndex--;
     } else {
         currentPhrase = currentFullPhrase.substring(0, letterIndex + 1);
-            letterIndex++;
+        letterIndex++;
     }
-                
+    
     typewriter.textContent = currentPhrase;
-                
+    
     let typeSpeed = isDeleting ? 50 : 100;
-                
+    
     if (!isDeleting && letterIndex === currentFullPhrase.length) {
         typeSpeed = 2000;
         isDeleting = true;
@@ -42,13 +48,13 @@ function type() {
         phraseIndex = (phraseIndex + 1) % phrases.length;
         typeSpeed = 500;
     }
-                
+    
     setTimeout(type, typeSpeed);
 }
-            
+
 // Start typewriter effect after a short delay
 setTimeout(type, 1000);
-            
+
 // Load adaptive cards SVG
 fetch('adaptive_cards_svg.svg')
     .then(response => response.text())
@@ -63,20 +69,22 @@ fetch('adaptive_cards_svg.svg')
             }
         }
     });
-            
-// Toggle dark mode when logo is clicked
-logo.addEventListener('click', () => {
+
+// Toggle dark mode when button is clicked
+themeToggle.addEventListener('click', () => {
     const svg = document.querySelector('#adaptive-svg-container svg');
-                
+    
     if (body.classList.contains('light-mode')) {
         body.classList.remove('light-mode');
         body.classList.add('dark-mode');
         localStorage.setItem('theme', 'dark');
+        themeToggle.classList.add('dark');
         if (svg) svg.classList.add('dark');
     } else {
         body.classList.remove('dark-mode');
         body.classList.add('light-mode');
         localStorage.setItem('theme', 'light');
+        themeToggle.classList.remove('dark');
         if (svg) svg.classList.remove('dark');
     }
-});
+}); 
